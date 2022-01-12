@@ -36,6 +36,14 @@
             margin-left: 230px;
             size: 50px;
         }
+        #editcreate{
+            background: aqua;
+            width: 400px;
+            height: 600px;
+        }
+        body{
+            width: 100%;
+        }
     </style>
 </head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
@@ -50,7 +58,6 @@
 </script>
 <script>
     function showEditTourist(id) {
-        console.log(id)
         let str = '';
         $.ajax({
             type: "Put",
@@ -58,13 +65,15 @@
             success: function (tourists) {
                 console.log(tourists)
                 str +=
+                    "<div id='editcreate'>"+
                     "<label>"+
-                    '<input type="text" value="' +tourists.city  + '" id="city">\n' +
-                    '<input type="text" value="' + tourists.gdp+ '" id="gdp">\n' +
-                    '<input type="text" value="' + tourists.acreage + '" id="acreage">\n' +
-                    '<input type="text" value="' +tourists.description + '" id="description">\n' +
+                    '<input class=/"editcreates/" type="text" value="' +tourists.city  + '" id="city">\n' +
+                    '<input class=/"editcreates/" type="text" value="' + tourists.gdp+ '" id="gdp">\n' +
+                    '<input class=/"editcreates/" type="text" value="' + tourists.acreage + '" id="acreage">\n' +
+                    '<input class=/"editcreates/" type="text" value="' +tourists.description + '" id="description">\n' +
                     '<select id="idcountry">'+
-                    "</label>";
+                    "</label>"+
+                    "</div>";
                 $.ajax({
                     type: "Get",
                     url: "http://localhost:8080/api/tourists/country",
@@ -72,7 +81,7 @@
                         for (let i = 0; i < country.length; i++) {
                             str += ` <option value="${country[i].id}">${country[i].name}</option>`
                         }
-                        str += '</select>' + '    <button onclick="saveEdit(' + tourists.id + ')">Save</button>'
+                        str += '</select>' + ' <button onclick="saveEdit(' + tourists.id + ')">Save</button>'
                         document.getElementById("res").innerHTML = str
                     }
                 })
@@ -159,8 +168,8 @@
             "    <tr>\n" +
             "        <th>Thành phố</th>" +
             "        <th>Quốc Gia</th>" +
-            "        <th>Số Dân</th>" +
-            "        <th>GDP</th>" +
+            "        <th>Số Dân(Tiệu Người)</th>" +
+            "        <th>GDP(Triệu Đô)</th>" +
             "        <th>Mô Tả</th>" +
             "        <th>Chỉnh sửa</th>" +
             "        <th>Xóa</th>" +
@@ -174,8 +183,8 @@
                 " <td>" + tourist[i].acreage + "</td>" +
                 " <td>" + tourist[i].gdp + "</td>" +
                 " <td>" + tourist[i].description + "</td>" +
-                " <td>" + "<button class='btn btn-success' onclick='showEditTourist(" + tourist[i].id + ")'>edit</button>\n" + "</td>" +
-                " <td>" + "<button class='btn btn-warning' onclick='deleteTourist(" + tourist[i].id + ")'>delete</button>\n" + "</td>" +
+                " <td>" + "<button class='btn btn-success' onclick='showEditTourist(" + tourist[i].id + ")'>Sửa</button>\n" + "</td>" +
+                " <td>" + "<button class='btn btn-warning' onclick='deleteTourist(" + tourist[i].id + ")'>Xóa</button>\n" + "</td>" +
                 "</tr>" +
                 "</tbody>"
         }
@@ -185,13 +194,15 @@
     function showCreate() {
         let str =
             "<br>"+
+            "<div style='height: 500px;height: 600px'>"+
             "<label>"+
             '<input class="input input-groud" type="text"  id="city" placeholder="Thành phố">' +"<br>"+"<br>"+
             '<input class="input input-groud" type="text"  id="gdp" placeholder="GDP">' +"<br>"+"<br>"+
             '<input class="input input-groud" type="text"  id="acreage" placeholder="Dân Số">' +"<br>"+"<br>"+
             '<input class="input input-groud" type="text"  id="description" placeholder="Giows thiệu">' +"<br>"+"<br>"+
             '<select class="user-select-none" id="idcountry">'+
-            "</label>";
+            "</label>"+
+            "</div>";
         $.ajax({
             type: "Get",
             url: "http://localhost:8080/api/tourists/country",
