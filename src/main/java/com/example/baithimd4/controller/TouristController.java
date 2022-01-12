@@ -39,5 +39,8 @@ public class TouristController {
     }
 
     @DeleteMapping("/{id}")
-
+    public ResponseEntity<Tourist> delete(@PathVariable Integer id){
+        touristService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
