@@ -49,6 +49,65 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 </script>
 <script>
+    function showEditblogs(id) {
+        console.log(id)
+        let str = '';
+        $.ajax({
+            type: "Put",
+            url: "http://localhost:8080/api/tourists/" + id,
+            success: function (tourists) {
+                console.log(tourists)
+                str +=
+                    '<input type="text" value="' +tourists.city  + '" id="city">\n' +
+                    '<input type="text" value="' + tourists.gdp+ '" id="gdp">\n' +
+                    '<input type="text" value="' + tourists.acreage + '" id="acrege">\n' +
+                    '<input type="text" value="' +tourists.description + '" id="description">\n' +
+                    '<select id="idcountry">';
+                $.ajax({
+                    type: "Get",
+                    url: "http://localhost:8080/api/tourists/country",
+                    success: function (country) {
+                        console.log(country)
+                        for (let i = 0; i < country.length; i++) {
+                            str += ` <option value="${country[i].id}">${country[i].name}</option>`
+                        }
+                        str += '</select>' + '    <button onclick="saveEdit(' + tourists.id + ')">Save</button>'
+                        document.getElementById("res").innerHTML = str
+                    }
+                })
+
+            },
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
+    function saveEdit(id) {
+        let tourists = {
+            city: document.getElementById("city").value,
+            gdp: document.getElementById("gdp").value,
+            acreage: document.getElementById("acreage").value,
+            description: document.getElementById("description").value,
+            country: {
+                id: document.getElementById("idcountry").value,
+            }
+        }
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "Put",
+            url: "http://localhost:8080/api/tourists/" + id,
+            data: JSON.stringify(tourists),
+            success: findAll,
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
     function deleteTourist(id){
         if (confirm("Bạn có chắc muốn xóa không ?")) {
             $.ajax({
