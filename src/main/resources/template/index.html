@@ -36,12 +36,14 @@
             margin-left: 230px;
             size: 50px;
         }
-        #editcreate{
+
+        #editcreate {
             background: aqua;
             width: 400px;
             height: 600px;
         }
-        body{
+
+        body {
             width: 100%;
         }
     </style>
@@ -65,14 +67,14 @@
             success: function (tourists) {
                 console.log(tourists)
                 str +=
-                    "<div id='editcreate'>"+
-                    "<label>"+
-                    '<input class=/"editcreates/" type="text" value="' +tourists.city  + '" id="city">\n' +
-                    '<input class=/"editcreates/" type="text" value="' + tourists.gdp+ '" id="gdp">\n' +
+                    "<div id='editcreate'>" +
+                    "<label>" +
+                    '<input class=/"editcreates/" type="text" value="' + tourists.city + '" id="city">\n' +
+                    '<input class=/"editcreates/" type="text" value="' + tourists.gdp + '" id="gdp">\n' +
                     '<input class=/"editcreates/" type="text" value="' + tourists.acreage + '" id="acreage">\n' +
-                    '<input class=/"editcreates/" type="text" value="' +tourists.description + '" id="description">\n' +
-                    '<select id="idcountry">'+
-                    "</label>"+
+                    '<input class=/"editcreates/" type="text" value="' + tourists.description + '" id="description">\n' +
+                    '<select id="idcountry">' +
+                    "</label>" +
                     "</div>";
                 $.ajax({
                     type: "Get",
@@ -118,7 +120,7 @@
         })
     }
 
-    function deleteTourist(id){
+    function deleteTourist(id) {
         if (confirm("Bạn có chắc muốn xóa không ?")) {
             $.ajax({
                 type: "Delete",
@@ -127,6 +129,7 @@
             })
         }
     }
+
     function findAll() {
         $.ajax({
             type: "Get",
@@ -191,17 +194,18 @@
         str += " </table>"
         document.getElementById("res").innerHTML = str
     }
+
     function showCreate() {
         let str =
-            "<br>"+
-            "<div style='height: 500px;height: 600px'>"+
-            "<label>"+
-            '<input class="input input-groud" type="text"  id="city" placeholder="Thành phố">' +"<br>"+"<br>"+
-            '<input class="input input-groud" type="text"  id="gdp" placeholder="GDP">' +"<br>"+"<br>"+
-            '<input class="input input-groud" type="text"  id="acreage" placeholder="Dân Số">' +"<br>"+"<br>"+
-            '<input class="input input-groud" type="text"  id="description" placeholder="Giows thiệu">' +"<br>"+"<br>"+
-            '<select class="user-select-none" id="idcountry">'+
-            "</label>"+
+            "<br>" +
+            "<div style='height: 500px;height: 600px'>" +
+            "<label>" +
+            '<input class="input input-groud" type="text"  id="city" placeholder="Thành phố">' + "<br>" + "<br>" +
+            '<input class="input input-groud" type="text"  id="gdp" placeholder="GDP">' + "<br>" + "<br>" +
+            '<input class="input input-groud" type="text"  id="acreage" placeholder="Dân Số">' + "<br>" + "<br>" +
+            '<input class="input input-groud" type="text"  id="description" placeholder="Giows thiệu">' + "<br>" + "<br>" +
+            '<select class="user-select-none" id="idcountry">' +
+            "</label>" +
             "</div>";
         $.ajax({
             type: "Get",
@@ -216,6 +220,7 @@
             }
         })
     }
+
     function save() {
         let countries = {
             city: document.getElementById("city").value,
@@ -228,19 +233,23 @@
         }
 
         console.log(countries)
-        $.ajax({
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            type: "POST",
-            url: "http://localhost:8080/api/tourists",
-            data: JSON.stringify(countries),
-            success: findAll,
-            error: function (error) {
-                console.log(error)
-            }
-        })
+        if (countries === "") {
+            alert("nhập đủ trường đi")
+        } else {
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: "http://localhost:8080/api/tourists",
+                data: JSON.stringify(countries),
+                success: findAll,
+                error: function (error) {
+                    console.log(error)
+                }
+            })
+        }
     }
 
 </script>
