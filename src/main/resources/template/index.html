@@ -10,9 +10,27 @@
         table{
             border-collapse:collapse;
         }
-        div.hi
+        div#hi
         {
-            solid-color: black;
+            background: gray;
+            margin-top: 200px;
+            width: 400px;
+            height: 400px;
+            border-width:2px;
+            border-style:solid;
+            border-color:black;
+        }
+        h3{
+            margin-right: 230px;
+            margin-top: 100px;
+        }
+        p.b{
+            margin-right: 230px;
+        }
+        button.a{
+            margin-top: 50px;
+            margin-left: 230px;
+            size: 50px;
         }
     </style>
 </head>
@@ -40,14 +58,24 @@
     function findOne(id) {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/tourits/" + id,
+            url: "http://localhost:8080/api/tourists/" + id,
             success: function (tourist) {
                 console.log(tourist)
                 document.getElementById("res").innerHTML =
+                    "<center>"+
                     "<div id='hi'>"+
-                    "<h3>" + 'Thành Phố: '+ tourist[i].city+"</h3>" +
-                    "<p>" + 'GDP: ' + tourist.gdp + "</p>" +
-                    "</div>"
+                    "<div>"+
+                    "<button class='btn btn-success a' onclick='findAll()'>"+'Danh sách Thành Phố'+"</button>"+
+                    "<h3>" + 'Thành Phố: '+ tourist.city +"</h3>" +
+                    "<br>"+
+                    "<p class='b'>" + 'GDP: ' + tourist.gdp + "</p>" +
+                    "<p class='b'>" + 'Dân số: ' + tourist.acreage + "</p>" +
+                    "<p class='b'>" + 'Giới Thiệu: ' + tourist.description+ "</p>" +
+                    "<p class='b'>" + 'Quốc Gia: ' + tourist.country.name+ "</p>" +
+                    "</div>"+
+                    "</div>"+
+                    "</center>"
+
 
             }
         })
