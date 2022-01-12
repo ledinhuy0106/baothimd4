@@ -3,8 +3,8 @@ package com.example.baithimd4.controller;
 
 import com.example.baithimd4.model.Country;
 import com.example.baithimd4.model.Tourist;
-import com.example.baithimd4.service.interf.CountryService;
-import com.example.baithimd4.service.interf.TouristService;
+import com.example.baithimd4.service.Impl.CountryImpl;
+import com.example.baithimd4.service.Impl.TouristImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +17,9 @@ import java.util.Optional;
 @RequestMapping("api/tourists")
 public class TouristController {
     @Autowired
-    TouristService touristService;
+    TouristImpl touristService;
     @Autowired
-    CountryService countryService;
+    CountryImpl countryService;
 
     @GetMapping("")
     public ResponseEntity<Iterable<Tourist>> findAll() {
