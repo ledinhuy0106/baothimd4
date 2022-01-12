@@ -30,4 +30,14 @@ public class TouristController {
         touristService.save(tourist);
         return new ResponseEntity<>(tourist, HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Tourist> update(@PathVariable Integer id,@RequestBody Tourist tourist){
+        tourist.setId(id);
+        touristService.save(tourist);
+        return new ResponseEntity<>(tourist,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+
 }
