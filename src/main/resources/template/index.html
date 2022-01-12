@@ -40,7 +40,7 @@
     function findOne(id) {
         $.ajax({
             type: "GET",
-            url: "http://localhost:8080/api/blogs/" + id,
+            url: "http://localhost:8080/api/tourits/" + id,
             success: function (tourist) {
                 console.log(tourist)
                 document.getElementById("res").innerHTML =
@@ -69,7 +69,7 @@
         for (let i = 0; i < tourist.length; i++) {
             str +=
                 "<tbody>"+
-                "<tr>" + " <td>"+"<p onclick='findOne("+tourist[i].id+")'>" +tourist[i].city+"</p>"+ "</td>\n" +
+                "<tr>" + " <td>"+"<p onclick='findOne("+tourist[i].id+")'>" +tourist[i].city+"</p>"+ "</td>" +
                 " <td>" + tourist[i].country.name + "</td>" +
                 " <td>" + tourist[i].acreage + "</td>" +
                 " <td>" + tourist[i].gdp + "</td>" +
