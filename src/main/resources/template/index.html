@@ -49,7 +49,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 </script>
 <script>
-    function showEditblogs(id) {
+    function showEditTourist(id) {
         console.log(id)
         let str = '';
         $.ajax({
@@ -58,16 +58,17 @@
             success: function (tourists) {
                 console.log(tourists)
                 str +=
+                    "<label>"+
                     '<input type="text" value="' +tourists.city  + '" id="city">\n' +
                     '<input type="text" value="' + tourists.gdp+ '" id="gdp">\n' +
-                    '<input type="text" value="' + tourists.acreage + '" id="acrege">\n' +
+                    '<input type="text" value="' + tourists.acreage + '" id="acreage">\n' +
                     '<input type="text" value="' +tourists.description + '" id="description">\n' +
-                    '<select id="idcountry">';
+                    '<select id="idcountry">'+
+                    "</label>";
                 $.ajax({
                     type: "Get",
                     url: "http://localhost:8080/api/tourists/country",
                     success: function (country) {
-                        console.log(country)
                         for (let i = 0; i < country.length; i++) {
                             str += ` <option value="${country[i].id}">${country[i].name}</option>`
                         }
@@ -181,8 +182,61 @@
         str += " </table>"
         document.getElementById("res").innerHTML = str
     }
+    function showCreate() {
+        let str =
+            "<br>"+
+            "<label>"+
+            '<input class="input input-groud" type="text"  id="city" placeholder="Thành phố">' +"<br>"+"<br>"+
+            '<input class="input input-groud" type="text"  id="gdp" placeholder="GDP">' +"<br>"+"<br>"+
+            '<input class="input input-groud" type="text"  id="acreage" placeholder="Dân Số">' +"<br>"+"<br>"+
+            '<input class="input input-groud" type="text"  id="description" placeholder="Giows thiệu">' +"<br>"+"<br>"+
+            '<select class="user-select-none" id="idcountry">'+
+            "</label>";
+        $.ajax({
+            type: "Get",
+            url: "http://localhost:8080/api/tourists/country",
+            success: function (countries) {
+                console.log(countries)
+                for (let i = 0; i < countries.length; i++) {
+                    str += ` <option value="${countries[i].id}">${countries[i].name}</option>`
+                }
+                str += '</select> <button onclick="save()">create</button>'
+                document.getElementById("res").innerHTML = str
+            }
+        })
+    }
+    function save() {
+        let countries = {
+            city: document.getElementById("city").value,
+            gdp: document.getElementById("gdp").value,
+            acreage: document.getElementById("acreage").value,
+            description: document.getElementById("description").value,
+            country: {
+                id: document.getElementById("idcountry").value,
+            }
+        }
+
+        console.log(countries)
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: "POST",
+            url: "http://localhost:8080/api/tourists",
+            data: JSON.stringify(countries),
+            success: findAll,
+            error: function (error) {
+                console.log(error)
+            }
+        })
+    }
+
 </script>
 <body onload="findAll()">
+<button onclick="showCreate()">
+    Thêm Tou Thành Phố
+</button>
 <div id="res"></div>
 </body>
 </html>
