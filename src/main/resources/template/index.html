@@ -49,6 +49,15 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js">
 </script>
 <script>
+    function deleteTourist(id){
+        if (confirm("Bạn có chắc muốn xóa không ?")) {
+            $.ajax({
+                type: "Delete",
+                url: "http://localhost:8080/api/tourists/" + id,
+                success: findAll
+            })
+        }
+    }
     function findAll() {
         $.ajax({
             type: "Get",
@@ -105,8 +114,8 @@
                 " <td>" + tourist[i].acreage + "</td>" +
                 " <td>" + tourist[i].gdp + "</td>" +
                 " <td>" + tourist[i].description + "</td>" +
-                " <td>" + "<button onclick=\"showEditblogs(" + tourist[i].id + ")\">edit</button>\n" + "</td>" +
-                " <td>" + "<button onclick=\"delete(" + tourist[i].id + ")\">delete</button>\n" + "</td>" +
+                " <td>" + "<button class='btn btn-success' onclick='showEditTourist(" + tourist[i].id + ")'>edit</button>\n" + "</td>" +
+                " <td>" + "<button class='btn btn-warning' onclick='deleteTourist(" + tourist[i].id + ")'>delete</button>\n" + "</td>" +
                 "</tr>" +
                 "</tbody>"
         }
