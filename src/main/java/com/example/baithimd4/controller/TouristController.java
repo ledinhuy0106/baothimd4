@@ -1,6 +1,7 @@
 package com.example.baithimd4.controller;
 
 
+import com.example.baithimd4.model.Country;
 import com.example.baithimd4.model.Tourist;
 import com.example.baithimd4.service.interf.CountryService;
 import com.example.baithimd4.service.interf.TouristService;
@@ -34,22 +35,27 @@ public class TouristController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tourist> update(@PathVariable Integer id,@RequestBody Tourist tourist){
+    public ResponseEntity<Tourist> update(@PathVariable Integer id, @RequestBody Tourist tourist) {
         tourist.setId(id);
         touristService.save(tourist);
-        return new ResponseEntity<>(tourist,HttpStatus.OK);
+        return new ResponseEntity<>(tourist, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Tourist> delete(@PathVariable Integer id){
+    public ResponseEntity<Tourist> delete(@PathVariable Integer id) {
         touristService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Tourist> detail(@PathVariable Integer id){
-        Optional<Tourist> tourists=touristService.findById(id);
-        return new ResponseEntity<>(tourists.get(),HttpStatus.OK);
+    public ResponseEntity<Tourist> detail(@PathVariable Integer id) {
+        Optional<Tourist> tourists = touristService.findById(id);
+        return new ResponseEntity<>(tourists.get(), HttpStatus.OK);
     }
 
+    @GetMapping("country")
+    public ResponseEntity<Iterable<Country>> findAllCategory() {
+        Iterable<Country> countries = countryService.findAll();
+        return new ResponseEntity<>(countries, HttpStatus.OK);
+    }
 }
