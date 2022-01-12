@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @CrossOrigin("*")
 @RequestMapping("api/tourists")
@@ -43,4 +45,11 @@ public class TouristController {
         touristService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Tourist> detail(@PathVariable Integer id){
+        Optional<Tourist> tourists=touristService.findById(id);
+        return new ResponseEntity<>(tourists.get(),HttpStatus.OK);
+    }
+
 }
